@@ -5,8 +5,29 @@
     <title>book</title>
 </head>
 <body>
-<p th:text="${book.getPerson_id() + ',' + book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear}">VALUE</p>
+<p th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear}">VALUE</p>
 
+
+<div th:if="${person.isPresent()}">
+    <form th:method="PATCH" th:action="@{/books/{id}/release(id=${book.getBook_id()})}">
+        <input type="submit" value="Release book"/>
+    </form>
+</div>
+<br/>
+<div th:if="${person.isEmpty()}">
+    <span> This book is free. Wanna assign?</span>
+    <form th:method="PATCH" th:action="@{/books/{id}/assign(id=${book.getBook_id()})}">
+        <label for="person">Choose person</label>
+        <select th:object="${person}" th:field="*{person_id}" id="person">
+            <option value="">-- Выберите город --</option>
+            <option value="petersburg">Санкт-Петербург</option>
+            <option value="samara">Самара</option>
+            <option value="perm">Пермь</option>
+            <option value="novosibirsk">Новосибирск</option>
+        </select>
+    </form>
+
+</div>
 <a th:href="@{/books/{id}/edit(id=${book.getBook_id()})}">Edit</a>
 
 <form th:method="DELETE" th:action="@{/books/{id}(id=${book.getBook_id()})}">

@@ -7,21 +7,20 @@
 <body>
 <p th:text="${person.getFull_name() + ', ' + person.getDate_of_birth()}">VALUE</p>
 
-<br/>
-<hr/>
+<div th:if="${personsBooks.isEmpty()}" >
+    <p> Person didn't get any book </p>
+    <hr/>
+</div>
 
-
-
-<p th:if="${personsBooks.isEmpty()}" th:text="'Person didn\'t get any book'" > </p>
-
-<p th:else
-   th:text="'Books:'" >
-
-    <a th:each="book : ${personsBooks}" >
-        <a th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear()}">book</a>
-    </a>
-
-</p>
+<div th:if="${!personsBooks.isEmpty()}" >
+    <hr/>
+    <b> Books: </b>
+    <br/>
+   <table th:each="book : ${personsBooks}" >
+        <tr th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear()}"> book </tr>
+    </table>
+    <hr/>
+</div>
 
 
 
