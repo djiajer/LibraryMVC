@@ -11,6 +11,8 @@ import ru.labza.dao.PersonDAO;
 import ru.labza.models.Book;
 import ru.labza.models.Person;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/books")
 public class BooksController {
@@ -29,10 +31,13 @@ public class BooksController {
         return "books/index";
     }
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model) {
+    public String show(@PathVariable("id") int id, Model model, @ModelAttribute("person") Person person) {
         model.addAttribute("book", bookDAO.show(id));
-        model.addAttribute("person", bookDAO.showOwner(id));
-        model.addAttribute("people", personDAO.index());
+        Optional<Person> bookOwner = bookDAO.showOwner(id);
+        if (bookOwner.isPresent())
+            model.addAttribute("owner", bookOwner.get());
+        else
+            model.addAttribute("people", personDAO.index());
         return "books/show";
     }
     @GetMapping("/new")
