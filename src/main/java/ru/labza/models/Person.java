@@ -1,25 +1,32 @@
 package ru.labza.models;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.Range;
 
+@Entity
+@Table(name = "Person")
 public class Person {
+    @Id
+    @Column(name = "person_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int person_id;
 
     @NotEmpty(message = "Name should not be empty")
     @Size(min = 4, max = 40, message = "Name should be between 4 and 40 characters")
     @Pattern(regexp = "[A-Za-z]+ [A-Z][.][A-Z][.]", message = "Full name must be in format: Ivanov I.I.")
+    @Column(name = "full_name")
     private String full_name;
 
     @Range(min = 1900, max = 2024, message = "Date of birth should be greater than 1900 and less than 2024")
+    @Column(name = "date_of_birth")
     private int date_of_birth;
 
 
     public Person() {
     }
 
-    public Person(int person_id, String full_name, int date_of_birth) {
-        this.person_id = person_id;
+    public Person(String full_name, int date_of_birth) {
         this.full_name = full_name;
         this.date_of_birth = date_of_birth;
     }
@@ -46,6 +53,14 @@ public class Person {
 
     public void setDate_of_birth(int date_of_birth) {
         this.date_of_birth = date_of_birth;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "full_name='" + full_name + '\'' +
+                ", date_of_birth=" + date_of_birth +
+                '}';
     }
 }
 
