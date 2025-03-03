@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.Range;
 
+import java.util.List;
+
 @Entity
 @Table(name = "Person")
 public class Person {
@@ -21,6 +23,9 @@ public class Person {
     @Range(min = 1900, max = 2024, message = "Date of birth should be greater than 1900 and less than 2024")
     @Column(name = "date_of_birth")
     private int date_of_birth;
+
+    @OneToMany(mappedBy = "owner")
+    List<Book> personsBooks;
 
 
     public Person() {

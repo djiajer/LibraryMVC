@@ -1,18 +1,30 @@
 package ru.labza.models;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-
+@Entity
+@Table(name = "Book")
 public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "book_id")
     private int book_id;
+
+    @ManyToOne
+    @JoinColumn(name = "person_id", referencedColumnName = "person_id")
+    private Person owner;
     @NotEmpty (message = "title should not be empty")
+    @Column(name = "title")
     private String title;
     @NotEmpty(message = "Name should not be empty")
     @Size(min = 4, max = 40, message = "Name should be between 4 and 40 characters")
     @Pattern(regexp = "[A-Za-z]+ [A-Z][.][A-Z][.]", message = "Author must be in format: Ivanov I.I.")
+    @Column(name = "author")
     private String author;
+    @Column(name = "year")
     private int year;
 
     public Book() {
