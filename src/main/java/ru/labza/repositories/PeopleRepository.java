@@ -7,5 +7,5 @@ import ru.labza.models.Person;
 import java.util.List;
 
 public interface PeopleRepository extends JpaRepository<Person, Integer> {
-    List<Book> findAllByPerson_id();
+
 }

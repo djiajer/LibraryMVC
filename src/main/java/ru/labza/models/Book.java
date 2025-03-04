@@ -14,7 +14,7 @@ public class Book {
     private int book_id;
 
     @ManyToOne
-    @JoinColumn(name = "person_id", referencedColumnName = "person_id")
+    @JoinColumn(name = "person_id_fk", referencedColumnName = "person_id")
     private Person owner;
     @NotEmpty (message = "title should not be empty")
     @Column(name = "title")
@@ -68,4 +68,13 @@ public class Book {
     public void setYear(int year) {
         this.year = year;
     }
+
+    public Person getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Person owner) {
+        this.owner = owner;
+    }
+
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.labza.models.Book;
 import ru.labza.models.Person;
 import ru.labza.services.PeopleService;
 
@@ -29,8 +30,10 @@ public class PeopleController {
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model) {
+    public String show(@PathVariable("id") int id,
+                       Model model) {
         model.addAttribute("person", peopleService.findOne(id));
+        model.addAttribute("personsBooks", peopleService.showPersonsBooks(id));
         return "people/show";
     }
 
