@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "Book")
 public class Book {
@@ -26,6 +28,12 @@ public class Book {
     private String author;
     @Column(name = "year")
     private int year;
+
+    @Column(name = "assigned_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date assigned_at;
+
+    private boolean isOverdue;
 
     public Book() {
     }
@@ -77,4 +85,26 @@ public class Book {
         this.owner = owner;
     }
 
+    public Date getAssigned_at() {
+        return assigned_at;
+    }
+
+    public void setAssigned_at(Date assigned_at) {
+        this.assigned_at = assigned_at;
+    }
+
+    public boolean isOverdue() {
+        return isOverdue;
+    }
+
+    public void setOverdue(boolean overdue) {
+        isOverdue = overdue;
+    }
+
+    public void updateOverdue() {
+        long overdueTime = (24 * 60 * 60 * 1000) * 10; // (1 day) * number of days
+        this.setOverdue(new Date().getTime()           //current time
+                - this.getAssigned_at().getTime()      //assigned time
+                > overdueTime);
+    }
 }

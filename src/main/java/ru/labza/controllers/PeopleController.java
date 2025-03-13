@@ -6,8 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.labza.models.Book;
 import ru.labza.models.Person;
+import ru.labza.services.BookService;
 import ru.labza.services.PeopleService;
 
 
@@ -16,11 +16,12 @@ import ru.labza.services.PeopleService;
 public class PeopleController {
 
     private final PeopleService peopleService;
+    private final BookService bookService;
 
     @Autowired
-    public PeopleController(PeopleService peopleService) {
+    public PeopleController(PeopleService peopleService, BookService bookService) {
         this.peopleService = peopleService;
-
+        this.bookService = bookService;
     }
 
     @GetMapping()

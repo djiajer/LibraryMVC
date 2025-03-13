@@ -1,11 +1,14 @@
 package ru.labza.services;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.labza.models.Book;
 import ru.labza.models.Person;
 import ru.labza.repositories.BookRepository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,12 +22,16 @@ public class BookService {
     }
 
     public List<Book> findAll() {
-        return bookRepository.findAll();
+        return bookRepository.findAll(Sort.by("year"));
     }
 
     public Book findOne(int id) {
-        return bookRepository.findById(id).orElse(null);
+        Optional<Book> book = bookRepository.findById(id);
+        book.ifPresent(Book::updateOverdue);
+        return book.orElse(null);
     }
+
+
 
     @Transactional
     public void save(Book book) {
@@ -42,7 +49,7 @@ public class BookService {
         bookRepository.deleteById(id);
     }
 
-    @Transactional      // maybe need to save()
+    @Transactional
     public void release(int id) {
         Book book = bookRepository.findById(id).get();
         book.setOwner(null);
@@ -52,8 +59,16 @@ public class BookService {
         return Optional.ofNullable(bookRepository.findById(id).get().getOwner());
     }
 
-    @Transactional      // maybe need to save()
+    @Transactional
     public void assign(int book_id, Person selectedPerson) {
         bookRepository.findById(book_id).get().setOwner(selectedPerson);
+        bookRepository.findById(book_id).get().setAssigned_at(new Date());
+    }
+    public List<Book> findAllOnPage(int page, int itemsPerPage) {
+        return bookRepository.findAll(PageRequest.of(page, itemsPerPage, Sort.by("year"))).getContent();
+    }
+
+    public Optional<List<Book>> searchByTitle(String s) {
+        return bookRepository.findByTitleStartingWith(s);
     }
 }

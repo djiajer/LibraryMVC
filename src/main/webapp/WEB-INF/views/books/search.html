@@ -1,10 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Search</title>
 </head>
 <body>
-$END$
+
+<div>
+    <span> Enter search query </span>
+    <form th:method="GET" th:action="@{/books/search}">
+
+        <label>
+            <input type="text" th:name="title"/>
+        </label>
+        <input type="submit" value="Search book">
+    </form>
+</div>
+<div th:if="${books}" th:each="book : ${books}">
+    <a th:href="@{/books/{id}(id=${book.getBook_id()})}"
+       th:text="${book.getTitle() + ', ' + book.getAuthor() + ',' + book.getYear}">book</a>
+</div>
+<div th:if="${books != null}">
+    <p> Not found </p>
+</div>
+
 </body>
 </html>
