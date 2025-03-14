@@ -5,8 +5,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.labza.models.Book;
 import ru.labza.models.Person;
 import ru.labza.repositories.PeopleRepository;
-
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 

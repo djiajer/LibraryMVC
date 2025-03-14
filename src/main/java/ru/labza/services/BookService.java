@@ -53,6 +53,7 @@ public class BookService {
     public void release(int id) {
         Book book = bookRepository.findById(id).get();
         book.setOwner(null);
+        book.setAssigned_at(null);
     }
 
     public Optional<Person> showOwner(int id) {

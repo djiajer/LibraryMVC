@@ -33,6 +33,7 @@ public class Book {
     @Temporal(TemporalType.TIMESTAMP)
     private Date assigned_at;
 
+    @Transient
     private boolean isOverdue;
 
     public Book() {
