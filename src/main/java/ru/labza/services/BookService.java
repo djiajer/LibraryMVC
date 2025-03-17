@@ -8,6 +8,7 @@ import ru.labza.models.Book;
 import ru.labza.models.Person;
 import ru.labza.repositories.BookRepository;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -27,13 +28,8 @@ public class BookService {
 
     public Book findOne(int id) {
         Optional<Book> book = bookRepository.findById(id);
-        book.ifPresent(book1 -> {
-            if (book1.getAssigned_at() != null) book1.updateOverdue();
-        });
         return book.orElse(null);
     }
-
-
 
     @Transactional
     public void save(Book book) {
@@ -42,7 +38,11 @@ public class BookService {
 
     @Transactional
     public void update(int id, Book updatedBook) {
+        Book bookToBeUpdated = bookRepository.findById(id).get();
+
         updatedBook.setBook_id(id);
+        updatedBook.setOwner(bookToBeUpdated.getOwner());
+
         bookRepository.save(updatedBook);
     }
 
@@ -71,7 +71,8 @@ public class BookService {
         return bookRepository.findAll(PageRequest.of(page, itemsPerPage, Sort.by("year"))).getContent();
     }
 
-    public Optional<List<Book>> searchByTitle(String s) {
-        return bookRepository.findByTitleStartingWith(s);
+    public List<Book> searchByTitle(String s) {
+        if (s.isBlank()) return Collections.emptyList();
+        return bookRepository.findByTitleStartingWithIgnoreCase(s);
     }
 }

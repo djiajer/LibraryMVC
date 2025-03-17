@@ -1,5 +1,6 @@
 package ru.labza.services;
 
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.labza.models.Book;
@@ -39,6 +40,7 @@ public class PeopleService {
     }
 
     public List<Book> showPersonsBooks(int id) {
+        Hibernate.initialize(peopleRepository.findById(id).get().getPersonsBooks());
         List<Book> bookList = peopleRepository.findById(id).get().getPersonsBooks();
         bookList.forEach(Book::updateOverdue);
         return bookList;

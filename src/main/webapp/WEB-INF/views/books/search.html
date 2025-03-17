@@ -8,7 +8,7 @@
 
 <div>
     <span> Enter search query </span>
-    <form th:method="GET" th:action="@{/books/search}">
+    <form th:method="POST" th:action="@{/books/search}">
 
         <label>
             <input type="text" th:name="title"/>
@@ -16,13 +16,29 @@
         <input type="submit" value="Search book">
     </form>
 </div>
-<div th:if="${books}" th:each="book : ${books}">
-    <a th:href="@{/books/{id}(id=${book.getBook_id()})}"
-       th:text="${book.getTitle() + ', ' + book.getAuthor() + ',' + book.getYear}">book</a>
+
+<div th:if="${books}">
+    <div th:if="${books.isEmpty()}">
+        <p> Not found </p>
+    </div>
+
+    <div th:each="book : ${books}">
+        <a th:href="@{/books/{id}(id=${book.getBook_id()})}"
+           th:text="${book.getTitle() + ', ' + book.getAuthor() + ',' + book.getYear}">book</a>
+
+        <div th:if="${book.getOwner() != null}">
+            <span th:text="${book.getOwner().getFull_name()}">Person Name</span> <span> has this book now </span>
+        </div>
+
+        <div th:if="${book.getOwner() == null}">
+            <span>This book is free now</span>
+        </div>
+
+        <hr/>
+    </div>
 </div>
-<div th:if="${books != null}">
-    <p> Not found </p>
-</div>
+
+
 
 </body>
 </html>

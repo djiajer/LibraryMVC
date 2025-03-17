@@ -39,8 +39,7 @@ public class Book {
     public Book() {
     }
 
-    public Book(int book_id, String title, String author, int year) {
-        this.book_id = book_id;
+    public Book(String title, String author, int year) {
         this.title = title;
         this.author = author;
         this.year = year;
@@ -103,9 +102,11 @@ public class Book {
     }
 
     public void updateOverdue() {
-        long overdueTime = (24 * 60 * 60 * 1000) * 10; // (1 day) * number of days
-        this.setOverdue(new Date().getTime()           //current time
-                - this.getAssigned_at().getTime()      //assigned time
-                > overdueTime);
+        if (this.assigned_at != null) {
+            long overdueTime = (24 * 60 * 60 * 1000) * 10; // (1 day) * number of days
+            this.setOverdue(new Date().getTime()           //current time
+                    - this.getAssigned_at().getTime()      //assigned time
+                    > overdueTime);
+        }
     }
 }
