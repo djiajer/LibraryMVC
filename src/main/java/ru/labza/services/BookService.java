@@ -27,7 +27,9 @@ public class BookService {
 
     public Book findOne(int id) {
         Optional<Book> book = bookRepository.findById(id);
-        book.ifPresent(Book::updateOverdue);
+        book.ifPresent(book1 -> {
+            if (book1.getAssigned_at() != null) book1.updateOverdue();
+        });
         return book.orElse(null);
     }
 

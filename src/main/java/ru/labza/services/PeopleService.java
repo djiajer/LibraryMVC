@@ -39,9 +39,8 @@ public class PeopleService {
     }
 
     public List<Book> showPersonsBooks(int id) {
-        Optional<Person> optionalPerson = peopleRepository.findById(id);
-        return optionalPerson.get().getPersonsBooks();
-
-
+        List<Book> bookList = peopleRepository.findById(id).get().getPersonsBooks();
+        bookList.forEach(Book::updateOverdue);
+        return bookList;
     }
 }
