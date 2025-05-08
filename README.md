@@ -17,9 +17,30 @@ was to re-write all this logic to Spring data JPA and Hibernate ORM.
 
 ## Interface Screenshots
 - List of all readers (`/people`)
+
+![image](https://github.com/user-attachments/assets/6ab88810-b8f8-419c-ac49-eb5fbce3555c)
+  
 - List of all books (`/books`)
+
+![image](https://github.com/user-attachments/assets/80bcadd2-fa7a-4bf3-aed7-c398a6ab03ca)
+  
 - Reader's page with their books (`/people/{id}`)
+
+![image](https://github.com/user-attachments/assets/163c6d26-13e6-40df-bd24-20bc742dc02c)
+
 - Book page with lending/returning options (`/books/{id}`)
+
+![image](https://github.com/user-attachments/assets/7c0ce336-9740-40e4-b14c-000f7738deff)
+
+- Adding new reader form
+  
+![image](https://github.com/user-attachments/assets/9bcf6a93-e948-4999-b33c-ad62be4d6402)
+
+- Searching book page
+ 
+![image](https://github.com/user-attachments/assets/8fe70bbc-4802-4c6b-9c76-0d83e0fbca8c)
+
+
 
 ## API Endpoints
 
